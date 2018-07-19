@@ -156,6 +156,20 @@ class Paladins {
     })
   }
 
+  // /gethirezserverstatus[ResponseFormat]/{developerId}/{signature}/{session}/{timestamp}
+  getServerStatus() {
+    let url = util.genUrl(this.paladinsUrl, 'gethirezserverstatus', this.devId, this.authKey, process.env[`PALADINS_${this.platform}_SESSION`])
+    return new Promise(function (resolve, reject) {
+      request(url, (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+          resolve(JSON.parse(body))
+        } else {
+          reject(error)
+        }
+      })
+    })
+  }
+
   getPlayerStatus (userName) {
     let url = util.genUrl(this.paladinsUrl, 'getplayerstatus', this.devId, this.authKey, process.env[`PALADINS_${this.platform}_SESSION`]) + '/' + userName
     return new Promise(function (resolve, reject) {
